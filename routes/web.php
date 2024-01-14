@@ -17,6 +17,9 @@ Route::get('/', function () {
     return view('pages.home');
 })->name('pages.home');
 
+Route::get('/connection', function () {
+    return view('pages.connection');
+})->name('pages.connection');
 
 Route::get('/monsters', function () {
     return view('monster.index');

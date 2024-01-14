@@ -21,7 +21,7 @@
           Créateurs
         </a>
         @guest
-          <a class="text-gray-300 hover:text-white px-3 py-2 hover:bg-gray-700" href="#">
+          <a class="text-gray-300 hover:text-white px-3 py-2 hover:bg-gray-700" href="{{ route('pages.connection') }}">
             Se connecter
           </a>
         @endguest
