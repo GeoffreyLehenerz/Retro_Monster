@@ -12,7 +12,7 @@
             <div class="md:flex">
                 <!-- Image du monstre -->
                 <div class="w-full md:w-1/2 relative">
-                  <img class="w-full h-full object-cover rounded-t-lg md:rounded-l-lg md:rounded-t-none" src="images/aqualizzard.png" alt="Nom du Monstre"/>
+                  <img class="w-full h-full object-cover rounded-t-lg md:rounded-l-lg md:rounded-t-none" src="storage/images/aqualizzard.png" alt="Nom du Monstre"/>
                   <div class="absolute top-4 right-4">
                     <button class="text-white bg-gray-400 hover:bg-red-700 rounded-full p-2 transition-colors duration-300" style="width: 40px;height: 40px;display: flex;justify-content: center;align-items: center;">
                         <i class="fa fa-bookmark"></i>
@@ -74,7 +74,7 @@
               <article class="relative bg-gray-700 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 monster-card" data-monster-type="spectral">
                 <img
                   class="w-full h-48 object-cover rounded-t-lg"
-                  src="images/aquadragon.png"
+                  src="storage/images/aquadragon.png"
                   alt="AbyssalRevenant"
                 />
                 <div class="p-4">
@@ -128,7 +128,7 @@
               >
                 <img
                   class="w-full h-48 object-cover rounded-t-lg"
-                  src="images/shadowmonkey.png"
+                  src="storage/images/shadowmonkey.png"
                   alt="AbyssalRevenant"
                 />
                 <div class="p-4">
@@ -182,7 +182,7 @@
               >
                 <img
                   class="w-full h-48 object-cover rounded-t-lg"
-                  src="images/spiritshade.png"
+                  src="storage/images/spiritshade.png"
                   alt="CosmicGleam"
                 />
                 <div class="p-4">
@@ -247,7 +247,7 @@
               >
                 <img
                   class="w-full h-48 object-cover rounded-t-lg"
-                  src="images/earthelemental.png"
+                  src="storage/images/earthelemental.png"
                   alt="AbyssalRevenant"
                 />
                 <div class="p-4">
@@ -301,7 +301,7 @@
               >
                 <img
                   class="w-full h-48 object-cover rounded-t-lg"
-                  src="images/rockmountain.png"
+                  src="storage/images/rockmountain.png"
                   alt="AbyssalRevenant"
                 />
                 <div class="p-4">
@@ -355,7 +355,7 @@
               >
                 <img
                   class="w-full h-48 object-cover rounded-t-lg"
-                  src="images/terrawolf.png"
+                  src="storage/images/terrawolf.png"
                   alt="AbyssalRevenant"
                 />
                 <div class="p-4">
