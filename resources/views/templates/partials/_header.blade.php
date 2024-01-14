@@ -2,7 +2,7 @@
     <nav class="container mx-auto px-4 py-4 mb-16 flex justify-between items-center">
       <div class="flex items-center">
         <a href="{{ route('pages.home') }}">
-          <img src="storage/images/Logo_RetroMonsters.png" alt="RetroMonsters Logo" class="h-32 mr-3 absolute" style="top: -28px"/>
+          <img src="{{asset('storage/images/Logo_RetroMonsters.png') }}" alt="RetroMonsters Logo" class="h-32 mr-3 absolute" style="top: -28px"/>
         </a>
         <a href="{{ route('pages.home') }}" class="text-white font-bold text-xl hidden">
           RetroMonsters
@@ -14,10 +14,10 @@
       </button>
 
       <div class="hidden md:flex items-center">
-        <a class="text-gray-300 hover:text-white px-3 py-2 hover:bg-gray-700" href="#">
+        <a class="text-gray-300 hover:text-white px-3 py-2 hover:bg-gray-700" href="{{ route('monster.index') }}">
           Monstres
         </a>
-        <a class="text-gray-300 hover:text-white px-3 py-2 hover:bg-gray-700" href="#">
+        <a class="text-gray-300 hover:text-white px-3 py-2 hover:bg-gray-700" href="{{ route('user.index') }}">
           Créateurs
         </a>
         @guest
