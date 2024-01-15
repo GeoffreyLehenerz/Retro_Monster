@@ -46,6 +46,10 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
+
+            Route::pattern('id', '[1-9][0-9]*');
+            Route::pattern('slug', '[a-z0-9]([a-z0-9\-]*[a-z0-9])*');
+            parent::boot();
         });
     }
 
