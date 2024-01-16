@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -31,5 +32,22 @@ class UserController extends Controller
         $user->update($validatedData);
 
         return redirect()->route('pages.home')->with('success', 'Profil mis à jour avec succès.');
+    }
+
+    public function destroy(User $user)
+    {
+        // Assurez-vous que l'utilisateur authentifié supprime uniquement son propre compte
+        if (auth()->id() !== $user->id) {
+            return redirect()->back()->withErrors(['message' => 'Action non autorisée.']);
+        }
+
+        // Suppression de l'utilisateur
+        $user->delete();
+
+        // Déconnexion de l'utilisateur
+        auth()->logout();
+
+        // Redirection avec un message de succès
+        return redirect()->route('pages.home')->with('success', 'Compte supprimé avec succès.');
     }
 }

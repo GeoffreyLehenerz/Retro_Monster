@@ -35,10 +35,14 @@
                         <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                             Mettre à jour
                         </button>
-                        <a href="{{ route('user.destroy', auth()->user()) }}" class="text-red-400 hover:text-red-500" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?');">
-                            Supprimer le compte
-                        </a>
                     </div>
+                </form>
+                <form action="{{ route('user.destroy', auth()->user()) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="text-red-400 hover:text-red-500">
+                        Supprimer le compte
+                    </button>
                 </form>
             </div>
         </div>
