@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MonsterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,23 +20,27 @@ Route::get('/', function () {
     return view('pages.home');
 })->name('pages.home');
 
-Route::get('/connection', function () {
-    return view('pages.connection');
-})->name('pages.connection');
-
 Route::get('/monsters', function () {
     return view('monster.index');
 })->name('monster.index');
+
+Route::get('/monsters/register', [MonsterController::class, 'register'])->name('monster.register');
+
+Route::post('/monsters/add', [MonsterController::class, 'add'])->middleware('auth')->name('monster.add');
 
 Route::get('monsters/{id}/{slug}', function ($id) {
     return view('monster.show', ['monster' => \App\Models\Monster::find($id)]);
 })->name('monsters.show');
 
+Route::get('/connection', function () {
+    return view('pages.connection');
+})->name('pages.connection');
+
 Route::get('/users', function () {
     return view('user.index');
 })->name('user.index');
 
-Route::get('/register', function () {
+Route::get('/users/register', function () {
     return view('user.register');
 })->name('user.register');
 

@@ -9,6 +9,18 @@ class Monster extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'rarety_id',
+        'type_id',
+        'pv',
+        'attack',
+        'defense',
+        'image_url',
+        'user_id'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
