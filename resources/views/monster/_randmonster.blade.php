@@ -1,3 +1,9 @@
+@php
+$favoritesIds = [];
+if (auth()->check()) {
+    $favoritesIds = auth()->user()->favorites->pluck('monster_id')->toArray();
+}
+@endphp
 <section class="mb-20">
     <div class="bg-gray-700 rounded-lg shadow-lg monster-card" data-monster-type="{{ strtolower($monster->monsterType->name) }}">
         <div class="md:flex">
@@ -5,7 +11,7 @@
             <div class="w-full md:w-1/2 relative">
               <img class="w-full h-full object-cover rounded-t-lg md:rounded-l-lg md:rounded-t-none" src="storage/images/{{$monster->image_url}}" alt="{{$monster->name}}"/>
               <div class="absolute top-4 right-4">
-                <button class="text-white bg-gray-400 hover:bg-red-700 rounded-full p-2 transition-colors duration-300" style="width: 40px;height: 40px;display: flex;justify-content: center;align-items: center;">
+                <button class="text-white {{ in_array($monster->id, $favoritesIds) ? 'bg-red-700' : 'bg-gray-400' }} hover:bg-red-700 rounded-full p-2 transition-colors duration-300" style="width: 40px;height: 40px;display: flex;justify-content: center;align-items: center;">
                     <i class="fa fa-bookmark"></i>
                 </button>
             </div>

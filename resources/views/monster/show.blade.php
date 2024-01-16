@@ -5,6 +5,12 @@
 @stop
 
 @section('content')
+@php
+$favoritesIds = [];
+if (auth()->check()) {
+    $favoritesIds = auth()->user()->favorites->pluck('monster_id')->toArray();
+}
+@endphp
 <div class="container mx-auto flex flex-wrap pb-12">
     <!-- Page de détail du monstre -->
     <section class="w-full">
@@ -15,9 +21,9 @@
             <div class="w-full md:w-1/2 relative">
               <img class="w-full h-full object-cover rounded-t-lg md:rounded-l-lg md:rounded-t-none" src="{{asset('storage/images/' . $monster->image_url) }}" alt="{{$monster->name}}"/>
               <div class="absolute top-4 right-4">
-                <button class="text-white bg-gray-400 hover:bg-red-700 rounded-full p-2 transition-colors duration-300" style="width: 40px;height: 40px;display: flex;justify-content: center;align-items: center;">
+                <button class="text-white {{ in_array($monster->id, $favoritesIds) ? 'bg-red-700' : 'bg-gray-400' }} hover:bg-red-700 rounded-full p-2 transition-colors duration-300" style="width: 40px;height: 40px;display: flex;justify-content: center;align-items: center;">
                   <i class="fa fa-bookmark"></i>
-                </button>
+              </button>
               </div>
             </div>
 

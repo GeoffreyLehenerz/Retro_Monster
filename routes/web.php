@@ -39,11 +39,8 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('my-deck', function () {
-    // Récupération de l'utilisateur actuellement connecté
-    $user = auth()->user();
-
     // Chargement des monstres favoris de l'utilisateur connecté
-    $favorites = $user->favorites()->with('monster')->get();
+    $favorites = auth()->user()->favorites()->with('monster')->get();
 
     // Extraction des monstres de la collection de favoris
     $monsters = $favorites->map(function ($favorite) {

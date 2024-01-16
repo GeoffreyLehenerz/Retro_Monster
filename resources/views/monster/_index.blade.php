@@ -1,4 +1,10 @@
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    @php
+    $favoritesIds = [];
+    if (auth()->check()) {
+        $favoritesIds = auth()->user()->favorites->pluck('monster_id')->toArray();
+    }
+    @endphp
     @foreach ($monsters as $monster)
         <!-- Monster Item -->
         <article class="relative bg-gray-700 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 monster-card" data-monster-type="{{strtolower($monster->monsterType->name)}}">
@@ -33,11 +39,11 @@
                     </a>
                 </div>
             </div>
-                <div class="absolute top-4 right-4">
-                    <button class="text-white bg-gray-400 hover:bg-red-700 rounded-full p-2 transition-colors duration-300" style="width: 40px;height: 40px;display: flex;justify-content: center;align-items: center;">
-                        <i class="fa fa-bookmark"></i>
-                    </button>
-                </div>
+            <div class="absolute top-4 right-4">
+                <button class="text-white {{ in_array($monster->id, $favoritesIds) ? 'bg-red-700' : 'bg-gray-400' }} hover:bg-red-700 rounded-full p-2 transition-colors duration-300" style="width: 40px;height: 40px;display: flex;justify-content: center;align-items: center;">
+                    <i class="fa fa-bookmark"></i>
+                </button>
+            </div>
         </article>
     @endforeach
 </div>
