@@ -41,7 +41,7 @@
               <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
                 Mon Profil
               </a>
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
+              <a href="{{ route('users.deck') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
                 Mon Deck
               </a>
               <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
@@ -74,7 +74,7 @@
       <a class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700" href="#">
         Mon Profil
       </a>
-      <a class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700" href="#">
+      <a class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700" href="{{ route('users.deck') }}">
         Mon Deck
       </a>
       <a class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700" href="#">
