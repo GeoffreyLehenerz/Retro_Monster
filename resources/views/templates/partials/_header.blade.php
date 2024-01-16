@@ -47,9 +47,12 @@
               <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
                 Ajouter un Monstre
               </a>
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
-                Se Déconnecter
-              </a>
+              <form action="{{ route('logout') }}" method="POST" class="block">
+                @csrf
+                <a href="javascript:void(0)" onclick="event.preventDefault(); this.closest('form').submit();" class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700">
+                    Se Déconnecter
+                </a>
+            </form>
             </div>
           </div>
         @endauth
@@ -77,9 +80,12 @@
       <a class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700" href="#">
         Ajouter un Monstre
       </a>
-      <a class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700" href="#">
-        Se Déconnecter
-      </a>
+      <form action="{{ route('logout') }}" method="POST" class="block">
+        @csrf
+        <a href="javascript:void(0)" onclick="event.preventDefault(); this.closest('form').submit();" class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700">
+            Se Déconnecter
+        </a>
+    </form>
     </div>
     @endauth
 </header>

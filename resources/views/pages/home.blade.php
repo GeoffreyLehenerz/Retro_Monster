@@ -29,7 +29,7 @@
           Derniers monstres ajoutés par les users que vous suivez
         </h2>
         @php
-          $followedUsers = auth()->user()->followings()->pluck('following_id');
+          $followedUsers = auth()->user()->following()->pluck('following_id');
           $monsters = \App\Models\Monster::whereIn('user_id', $followedUsers)->orderBy('created_at', 'DESC')->limit(3)->get();
         @endphp
         @include('monster._index', [
