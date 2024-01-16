@@ -58,9 +58,34 @@ if (auth()->check()) {
                 </div>
               </div>
               <div class="mb-4">
-                <span class="text-yellow-400">★★★★☆</span>
-                <span class="text-gray-300 text-sm">(4.0/5.0)</span>
-              </div>
+                @php
+                    $note = $monster->monsterAverage->average_note ?? 0;
+                    $fullStars = floor($note);
+                    $halfStar = ($note - $fullStars) > 0 ? 1 : 0;
+                    $emptyStars = 5 - $fullStars - $halfStar;
+                @endphp
+            
+                @for ($i = 0; $i < $fullStars; $i++)
+                    <span class="text-yellow-400">&#9733;</span> <!-- étoile pleine -->
+                @endfor
+            
+                @if ($halfStar)
+                    <span class="text-yellow-400">&#9734;</span> <!-- demi-étoile -->
+                @endif
+            
+                @for ($i = 0; $i < $emptyStars; $i++)
+                    <span class="text-gray-300">&#9734;</span> <!-- étoile vide -->
+                @endfor
+            
+                <span class="text-gray-300 text-sm">
+                    @if ($monster->monsterAverage)
+                        {{ number_format($note, 1) }}/5.0
+                    @else
+                        Pas encore de note
+                    @endif
+                </span>
+            </div>
+            
               <div class="">
                 <a
                   href="monster.html"

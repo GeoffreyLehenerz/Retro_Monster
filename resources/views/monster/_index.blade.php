@@ -22,10 +22,35 @@
                     {{$monster->description}}
                 </p>
                 <div class="flex justify-between items-center mb-2">
-                    <div>
-                    <span class="text-yellow-400">★★★★☆</span>
-                    <span class="text-gray-300 text-sm">(4.0/5.0)</span>
+                    <div class="mb-4">
+                        @php
+                            $note = $monster->monsterAverage->average_note ?? 0;
+                            $fullStars = floor($note);
+                            $halfStar = ($note - $fullStars) > 0 ? 1 : 0;
+                            $emptyStars = 5 - $fullStars - $halfStar;
+                        @endphp
+                    
+                        @for ($i = 0; $i < $fullStars; $i++)
+                            <span class="text-yellow-400">&#9733;</span> <!-- étoile pleine -->
+                        @endfor
+                    
+                        @if ($halfStar)
+                            <span class="text-yellow-400">&#9734;</span> <!-- demi-étoile -->
+                        @endif
+                    
+                        @for ($i = 0; $i < $emptyStars; $i++)
+                            <span class="text-gray-300">&#9734;</span> <!-- étoile vide -->
+                        @endfor
+                    
+                        <span class="text-gray-300 text-sm">
+                            @if ($monster->monsterAverage)
+                                {{ number_format($note, 1) }}/5.0
+                            @else
+                                Pas encore de note
+                            @endif
+                        </span>
                     </div>
+                    
                     <span class="text-sm text-gray-300">Type: {{$monster->monsterType->name}}</span>
                 </div>
                 <div class="flex justify-between items-center mb-4">

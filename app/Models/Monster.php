@@ -36,6 +36,11 @@ class Monster extends Model
         return $this->belongsTo(Rarety::class, 'rarety_id');
     }
 
+    public function monsterAverage()
+    {
+        return $this->hasOne(MonsterAverage::class, 'monster_id', 'id');
+    }
+
     public function comments()
     {
         return $this->hasMany(Comment::class, 'monster_id');
