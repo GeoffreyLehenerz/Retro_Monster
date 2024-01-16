@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class UserController extends Controller
@@ -49,5 +50,29 @@ class UserController extends Controller
 
         // Redirection avec un message de succès
         return redirect()->route('pages.home')->with('success', 'Compte supprimé avec succès.');
+    }
+
+    public function add(Request $request)
+    {
+
+        // Valider les données reçues du formulaire
+        $validatedData = $request->validate([
+            'username' => 'required|string|max:255|unique:users',
+            'email' => 'required|email|max:255|unique:users',
+            'new_password' => 'required|string|confirmed',
+        ]);
+
+        // Créer un nouvel utilisateur
+        $user = User::create([
+            'username' => $validatedData['username'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['new_password']),
+        ]);
+
+        // Connecter l'utilisateur après l'inscription
+        auth()->login($user);
+
+        // Rediriger vers la page d'accueil ou une autre page souhaitée
+        return redirect()->route('pages.home')->with('success', 'Compte créé avec succès et connexion réussie.');
     }
 }

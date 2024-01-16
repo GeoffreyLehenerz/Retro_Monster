@@ -35,7 +35,13 @@ Route::get('/users', function () {
     return view('user.index');
 })->name('user.index');
 
-Route::get('/profile', [UserController::class, 'edit'])->middleware('auth')->name('user.edit');
+Route::get('/register', function () {
+    return view('user.register');
+})->name('user.register');
+
+Route::get('/user/edit', [UserController::class, 'edit'])->middleware('auth')->name('user.edit');
+
+Route::post('/user/add', [UserController::class, 'add'])->name('user.add');
 
 Route::put('/update-profile', [UserController::class, 'update'])->middleware('auth')->name('user.update');
 
