@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,12 @@ Route::get('/users', function () {
     return view('user.index');
 })->name('user.index');
 
+Route::get('/profile', [UserController::class, 'edit'])->middleware('auth')->name('user.edit');
+
+Route::put('/update-profile', [UserController::class, 'update'])->middleware('auth')->name('user.update');
+
+Route::put('/destroy-profile', [UserController::class, 'destroy'])->middleware('auth')->name('user.destroy');
+
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -47,4 +54,4 @@ Route::get('my-deck', function () {
         return $favorite->monster;
     });
     return view('user.deck', ['monsters' => $monsters]);
-})->middleware('auth')->name('users.deck');
+})->middleware('auth')->name('user.deck');
