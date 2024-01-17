@@ -26,9 +26,13 @@ Route::get('/monsters', function () {
     return view('monster.index');
 })->name('monster.index');
 
-Route::get('/monsters/register', [MonsterController::class, 'register'])->name('monster.register');
+Route::get('/monster/gestion', [MonsterController::class, 'register'])->name('monster.management');
+
+Route::post('/monster/manage', [MonsterController::class, 'manage'])->name('monster.manage');
 
 Route::post('/monsters/add', [MonsterController::class, 'add'])->middleware('auth')->name('monster.add');
+
+Route::put('/monster/update/{id}', [MonsterController::class, 'update'])->name('monster.update');
 
 Route::get('monsters/{id}/{slug}', function ($id) {
     return view('monster.show', ['monster' => \App\Models\Monster::find($id)]);

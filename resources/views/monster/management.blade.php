@@ -10,31 +10,29 @@ Gérez vos Monstres
         <div class="w-full">
             <div class="bg-gray-700 p-6 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold mb-4 text-center creepster">
-                    Pas ici 
+                    Gérez vos Monstres
                 </h2>
-                <form action="{{ route('monster.manage') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <form action="#" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     <!-- Menu Déroulant pour Sélectionner un Monstre Existant -->
                     <div>
                         <label for="existing-monster" class="block mb-1">Sélectionnez un Monstre:</label>
-                        <select name="existing_monster" id="existing-monster" class="w-full border rounded px-3 py-2 text-gray-700">
-                            <option value="">--Choisissez un Monstre--</option>
+                        <select name="existing_monster" id="existing-monster" class="w-full border rounded px-3 py-2 text-gray-700" onchange="updateForm()">
+                            <option value="">--Nouveau Monstre--</option>
                             @foreach($monsters as $monster)
                                 <option value="{{ $monster->id }}">{{ $monster->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="flex justify-between">
-                        <!-- Boutons Éditer et Supprimer -->
-                        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            Éditer
-                        </button>
                         <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                             Supprimer
                         </button>
                     </div>
-                <form action="{{ route('monster.add') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                </form>
+                <form id="monster-form" action="{{ route('monster.add') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
+                    <input type="hidden" name="_method" value="POST" id="form-method">
                     <div>
                         <label for="name" class="block mb-1">Nom du monstres</label>
                         <input type="text" id="name" name="name" class="w-full border rounded px-3 py-2 text-gray-700" placeholder="Nom du monstres" />
@@ -111,6 +109,57 @@ Gérez vos Monstres
     </div>
 </div>
 <script>
+
+    function updateForm() {
+        var monsters = @json($monsters);
+        var form = document.getElementById('monster-form');
+        var selectedMonsterId = document.getElementById('existing-monster').value;
+
+        if(selectedMonsterId) {
+            var selectedMonster = monsters.find(monster => monster.id == selectedMonsterId);
+
+            // Mettre à jour les champs du formulaire
+            document.getElementById('name').value = selectedMonster.name;
+            document.getElementById('description').value = selectedMonster.description;
+
+            // Mise à jour des menus déroulants de rareté et de type
+            document.getElementById('rarety').value = selectedMonster.rarety_id;
+            document.getElementById('type').value = selectedMonster.type_id;
+
+            // Mise à jour des sliders
+            sliderPv.noUiSlider.set(selectedMonster.pv);
+            sliderAttack.noUiSlider.set(selectedMonster.attack);
+            sliderDefense.noUiSlider.set(selectedMonster.defense);
+
+            //modifier la cible du formulaire
+            form.action = 'http://127.0.0.1:8000/monster/update/' + selectedMonsterId;
+            document.getElementById('form-method').value = 'PUT';
+
+            // Modifier le texte du bouton de soumission
+            document.querySelector('button[type="submit"]').textContent = 'Éditer la créature';
+        } else {
+            // Réinitialiser le formulaire
+            document.getElementById('name').value = "";
+            document.getElementById('description').value = "";
+
+            // Mise à jour des menus déroulants de rareté et de type
+            document.getElementById('rarety').value = 0;
+            document.getElementById('type').value = 0;
+
+            // Mise à jour des sliders
+            sliderPv.noUiSlider.set(100);
+            sliderAttack.noUiSlider.set(100);
+            sliderDefense.noUiSlider.set(100);
+
+            //modifier la cible du formulaire
+            form.action = '{{ route("monster.add") }}';
+
+            //modifier la cible du formulaire
+            document.querySelector('button[type="submit"]').textContent = 'Enregistrement de la créature';
+            document.getElementById('form-method').value = 'POST';
+        }
+    }
+
     // Slider pour les PV
     var sliderPv = document.getElementById("slider-pv");
     var pv = document.getElementById("pv");

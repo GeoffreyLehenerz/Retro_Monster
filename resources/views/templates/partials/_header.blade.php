@@ -44,8 +44,8 @@
               <a href="{{ route('user.deck') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
                 Mon Deck
               </a>
-              <a href="{{ route('monster.register') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
-                Ajouter un Monstre
+              <a href="{{ route('monster.management') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
+                Gestion de vos monstres
               </a>
               <form action="{{ route('logout') }}" method="POST" class="block">
                 @csrf
@@ -77,8 +77,8 @@
       <a class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700" href="{{ route('user.deck') }}">
         Mon Deck
       </a>
-      <a class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700" href="{{ route('monster.register') }}">
-        Ajouter un Monstre
+      <a class="block bg-gray-900 text-white px-4 py-2 hover:bg-gray-700" href="{{ route('monster.management') }}">
+        Gestion de vos monstres
       </a>
       <form action="{{ route('logout') }}" method="POST" class="block">
         @csrf
