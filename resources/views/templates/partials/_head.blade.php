@@ -22,6 +22,7 @@
       href="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
       .monster-card[data-monster-type="cosmique"] {
         background: linear-gradient(to right, #6e48aa, #9d50bb);

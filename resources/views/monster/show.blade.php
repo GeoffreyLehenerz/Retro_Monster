@@ -102,7 +102,7 @@ if (auth()->check()) {
       @auth
       <div class="mt-6">
         <h3 class="text-2xl font-bold mb-4">Évaluez ce Monstre</h3>
-        <div id="rating-section" class="flex items-center">
+        <div id="rating-section" class="flex items-center text-3xl">
           <span class="rating-star" data-value="1">&#9733;</span>
           <span class="rating-star" data-value="2">&#9733;</span>
           <span class="rating-star" data-value="3">&#9733;</span>
@@ -112,22 +112,85 @@ if (auth()->check()) {
       </div>
       @endauth
       <script>
-        document.querySelectorAll(".rating-star").forEach((star) => {
-          star.onclick = function () {
-            let rating = this.getAttribute("data-value");
-            document
-              .querySelectorAll(".rating-star")
-              .forEach((innerStar) => {
-                if (innerStar.getAttribute("data-value") <= rating) {
-                  innerStar.classList.add("selected");
-                } else {
-                  innerStar.classList.remove("selected");
-                }
-              });
-            // Envoyer la valeur 'rating' au serveur ou la traiter comme nécessaire
-          };
+        document.addEventListener("DOMContentLoaded", () => {
+          const stars = document.querySelectorAll(".rating-star");
+
+          stars.forEach((star) => {
+          // Gestionnaire de clic
+            star.addEventListener("click", function () {
+              let rating = this.getAttribute("data-value");
+              updateStars(stars, rating, true); // true indique une sélection permanente
+              sendRatingToServer(rating); // Envoyer la notation au serveur
+            });
+
+          // Gestionnaire de survol
+            star.addEventListener("mouseover", function () {
+              let rating = this.getAttribute("data-value");
+              updateStars(stars, rating, false); // false indique une mise à jour temporaire
+            });
+
+          // Réinitialiser les étoiles lorsque la souris quitte la zone de notation
+            star.addEventListener("mouseleave", function () {
+              updateStars(stars, getCurrentRating(stars), false);
+            });
+          });
         });
+
+        function updateStars(stars, rating, isPermanentSelection) {
+          stars.forEach((innerStar) => {
+            if (innerStar.getAttribute("data-value") <= rating) {
+              innerStar.style.color = 'yellow';
+            if (isPermanentSelection) {
+                innerStar.classList.add("selected");
+            }
+            } else {
+              innerStar.style.color = 'gray'; // Couleur pour les étoiles non sélectionnées
+              if (isPermanentSelection) {
+                innerStar.classList.remove("selected");
+              }
+            }
+          });
+        }
+
+        function getCurrentRating(stars) {
+          let rating = 0;
+          stars.forEach((star) => {
+            if (star.classList.contains('selected')) {
+              rating = star.getAttribute("data-value");
+            }
+          });
+          return rating;
+        }
+
+        function sendRatingToServer(rating) {
+          const url = '/rate-monster';
+          const monsterId = {{$monster->id}};
+          const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); 
+
+        // Création de l'objet FormData pour l'envoi
+          let formData = new FormData();
+          formData.append('rating', rating);
+          formData.append('monster_id', monsterId);
+
+          // Requête AJAX pour envoyer la note
+          fetch(url, {
+          method: 'POST',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': csrfToken,
+          },
+          body: formData
+          }).then(response => response.json())
+          .then(data => {
+          // Gérez la réponse ici
+          console.log(data);
+          })
+          .catch(error => {
+          console.error('Erreur:', error);
+          });
+        }
       </script>
+    
 
       <!-- Section commentaires -->
       <div class="mt-6">

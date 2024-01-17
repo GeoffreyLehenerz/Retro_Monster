@@ -31,7 +31,7 @@
           <div class="relative" x-data="{ userMenuOpen: false }">
 
             <button @click="userMenuOpen = !userMenuOpen" class="text-white">
-              <img src="storage/images/user.webp" alt="" class="w-16" />
+              <img src="{{asset('storage/images/user.webp')}}" alt="" class="w-16" />
             </button>
 
             <div x-show="userMenuOpen" @click.away="userMenuOpen = false" class="absolute right-0 mt-2 w-48 bg-gray-100 rounded-md shadow-lg pb-1 z-50">

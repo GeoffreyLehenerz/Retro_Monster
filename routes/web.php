@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MonsterController;
+use App\Http\Controllers\NotationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,8 @@ Route::post('/monsters/add', [MonsterController::class, 'add'])->middleware('aut
 Route::get('monsters/{id}/{slug}', function ($id) {
     return view('monster.show', ['monster' => \App\Models\Monster::find($id)]);
 })->name('monsters.show');
+
+Route::post('/rate-monster', [NotationController::class, 'store'])->name('monster.rate');
 
 Route::get('/connection', function () {
     return view('pages.connection');
