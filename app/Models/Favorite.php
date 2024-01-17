@@ -9,6 +9,16 @@ class Favorite extends Model
 {
     use HasFactory;
 
+    public const UPDATED_AT = null;
+
+    protected $fillable = [
+        'user_id',
+        'monster_id',
+    ];
+
+    protected $primaryKey = ['user_id', 'monster_id']; // Définition des clés primaires
+    public $incrementing = false; // Désactive l'auto-incrémentation
+
     public function user()
     {
         return $this->belongsTo(User::class);

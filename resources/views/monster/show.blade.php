@@ -20,11 +20,17 @@ if (auth()->check()) {
             <!-- Image du monstre -->
             <div class="w-full md:w-1/2 relative">
               <img class="w-full h-full object-cover rounded-t-lg md:rounded-l-lg md:rounded-t-none" src="{{asset('storage/images/' . $monster->image_url) }}" alt="{{$monster->name}}"/>
+              @php
+                $isFavorite = auth()->check() && auth()->user()->favorites->contains('monster_id', $monster->id);
+              @endphp
               <div class="absolute top-4 right-4">
-                <button class="text-white {{ in_array($monster->id, $favoritesIds) ? 'bg-red-700' : 'bg-gray-400' }} hover:bg-red-700 rounded-full p-2 transition-colors duration-300" style="width: 40px;height: 40px;display: flex;justify-content: center;align-items: center;">
-                  <i class="fa fa-bookmark"></i>
-              </button>
-              </div>
+                <button 
+                class="add-to-favorites text-white {{ $isFavorite ? 'bg-red-700' : 'bg-gray-400' }} hover:bg-red-700 rounded-full p-2 transition-colors duration-300"
+                    style="width: 40px; height: 40px; display: flex; justify-content: center; align-items: center;"
+                    data-id="{{ $monster->id }}">
+                    <i class="fa fa-bookmark"></i>
+                </button>
+            </div>
             </div>
 
             <!-- Détails du monstre -->
@@ -86,13 +92,13 @@ if (auth()->check()) {
                 </span>
             </div>
             
-              <div class="">
-                <a
-                  href="monster.html"
-                  class="inline-block text-white bg-red-500 hover:bg-red-700 rounded-full px-4 py-2 transition-colors duration-300"
-                  >Ajouter à mon deck</a
-                >
-              </div>
+            <div class="">
+              <button 
+                  class="add-to-favorites text-white bg-red-500 hover:bg-red-700 rounded-full px-4 py-2 transition-colors duration-300"
+                  data-id="{{ $monster->id }}">
+                  Ajouter à mon deck
+              </button>
+          </div>
             </div>
           </div>
         </div>
@@ -231,4 +237,41 @@ if (auth()->check()) {
       </div>
     </section>
   </div>
+  <script>
+    document.querySelectorAll('.add-to-favorites').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); // Empêche le comportement par défaut du bouton
+            var monsterId = this.getAttribute('data-id');
+            var url = '{{ route("monster.add-to-favorites", ["monsterId" => ":id"]) }}'.replace(':id', monsterId);
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ monsterId: monsterId })
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                  var buttons = document.querySelectorAll('.add-to-favorites[data-id="' + monsterId + '"]');
+                  buttons.forEach(button => {
+                      if (data.added) {
+                          button.classList.remove('bg-gray-400');
+                          button.classList.add('bg-red-700');
+                      } else if (data.removed) {
+                          button.classList.add('bg-gray-400');
+                          button.classList.remove('bg-red-700');
+                      }
+                  });
+              } else {
+                  throw new Error('Échec de l\'ajout ou de la suppression des favoris');
+              }
+          })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
 @stop
