@@ -37,7 +37,7 @@
                         </button>
                     </div>
                 </form>
-                <form action="{{ route('user.destroy', auth()->user()) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?');">
+                <form class="pt-4" action="{{ route('user.destroy', auth()->user()) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?');">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="text-red-400 hover:text-red-500">
