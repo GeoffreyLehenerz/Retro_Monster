@@ -209,21 +209,24 @@ if (auth()->check()) {
         </div>
         <!-- Formulaire de commentaire -->
         @auth
-        <div class="bg-gray-800 rounded p-4">
-          <h4 class="font-bold text-lg text-red-500 mb-2">
-            Laissez un commentaire
-          </h4>
-          <textarea
-            class="w-full p-2 bg-gray-900 rounded text-gray-300"
-            rows="4"
-            placeholder="Votre commentaire..."
-          ></textarea>
-          <button
-            class="mt-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full w-full"
-          >
-            Envoyer
-          </button>
-        </div>
+        <form action="{{ route('monster.comment', $monster->id) }}" method="POST">
+            @csrf
+            <div class="bg-gray-800 rounded p-4">
+              <h4 class="font-bold text-lg text-red-500 mb-2">
+                Laissez un commentaire
+              </h4>
+              <textarea
+                name="content" 
+                class="w-full p-2 bg-gray-900 rounded text-gray-300"
+                rows="4"
+                placeholder="Votre commentaire..."
+                required
+              ></textarea>
+              <button type="submit" class="mt-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full w-full">
+                Envoyer
+              </button>
+            </div>
+        </form>
         @endauth
       </div>
     </section>

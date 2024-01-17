@@ -9,6 +9,11 @@ class Comment extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = ['user_id', 'monster_id']; // Définition des clés primaires
+    public $incrementing = false; // Désactive l'auto-incrémentation
+
+    protected $fillable = ['user_id', 'monster_id', 'content'];
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MonsterController;
 use App\Http\Controllers\NotationController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,8 @@ Route::get('monsters/{id}/{slug}', function ($id) {
 })->name('monsters.show');
 
 Route::post('/rate-monster', [NotationController::class, 'store'])->name('monster.rate');
+
+Route::post('/monster/{monster}/comment', [CommentController::class, 'store'])->name('monster.comment');
 
 Route::get('/connection', function () {
     return view('pages.connection');
