@@ -117,4 +117,20 @@ class MonsterController extends Controller
         // Rediriger vers une page avec un message de succès
         return redirect()->route('pages.home')->with('success', 'Monstre mis à jour avec succès!');
     }
+
+    public function delete($id)
+    {
+        $monster = Monster::findOrFail($id);
+
+        // Supprimer l'image si elle existe
+        if ($monster->image_url && file_exists(storage_path('app/public/images/' . $monster->image_url))) {
+            unlink(storage_path('app/public/images/' . $monster->image_url));
+        }
+
+        // Supprimer le monstre
+        $monster->delete();
+
+        // Rediriger vers une page avec un message de succès
+        return redirect()->route('pages.home')->with('success', 'Monstre supprimé avec succès!');
+    }
 }

@@ -34,6 +34,8 @@ Route::post('/monsters/add', [MonsterController::class, 'add'])->middleware('aut
 
 Route::put('/monster/update/{id}', [MonsterController::class, 'update'])->name('monster.update');
 
+Route::delete('/monster/delete/{id}', [MonsterController::class, 'delete'])->name('monster.delete');
+
 Route::get('monsters/{id}/{slug}', function ($id) {
     return view('monster.show', ['monster' => \App\Models\Monster::find($id)]);
 })->name('monsters.show');

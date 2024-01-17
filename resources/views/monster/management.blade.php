@@ -12,8 +12,9 @@ Gérez vos Monstres
                 <h2 class="text-2xl font-bold mb-4 text-center creepster">
                     Gérez vos Monstres
                 </h2>
-                <form action="#" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <form action="" method="POST" id="delete-monster-form">
                     @csrf
+                    @method('DELETE')
                     <!-- Menu Déroulant pour Sélectionner un Monstre Existant -->
                     <div>
                         <label for="existing-monster" class="block mb-1">Sélectionnez un Monstre:</label>
@@ -24,12 +25,12 @@ Gérez vos Monstres
                             @endforeach
                         </select>
                     </div>
-                    <div class="flex justify-between">
-                        <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                    <div class="flex justify-center">
+                        <button type="button" onclick="submitDeleteForm()" class="bg-red-500 hover:bg-red-700 text-white font-bold mt-8 py-2 px-4 rounded">
                             Supprimer
                         </button>
                     </div>
-                </form>
+                </form>              
                 <form id="monster-form" action="{{ route('monster.add') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     <input type="hidden" name="_method" value="POST" id="form-method">
@@ -159,6 +160,20 @@ Gérez vos Monstres
             document.getElementById('form-method').value = 'POST';
         }
     }
+
+    function submitDeleteForm() {
+        var selectedMonsterId = document.getElementById('existing-monster').value;
+        if(selectedMonsterId) {
+            if(confirm('Êtes-vous sûr de vouloir supprimer ce monstre ?')) {
+                var deleteForm = document.getElementById('delete-monster-form');
+                deleteForm.action = '/monster/delete/' + selectedMonsterId; // Assurez-vous que cette URL correspond à votre route de suppression
+                deleteForm.submit();
+            }
+        } else {
+            alert('Veuillez sélectionner un monstre à supprimer.');
+        }
+    }
+
 
     // Slider pour les PV
     var sliderPv = document.getElementById("slider-pv");
