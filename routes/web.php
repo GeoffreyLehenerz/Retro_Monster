@@ -7,6 +7,7 @@ use App\Http\Controllers\MonsterController;
 use App\Http\Controllers\NotationController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FavoritesController;
+use App\Http\Controllers\FollowsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,7 @@ Route::get('/user/edit', [UserController::class, 'edit'])->middleware('auth')->n
 Route::post('/user/add', [UserController::class, 'add'])->name('user.add');
 Route::put('/update-profile', [UserController::class, 'update'])->middleware('auth')->name('user.update');
 Route::delete('/user/{user}', [UserController::class, 'destroy'])->middleware('auth')->name('user.destroy');
+Route::post('/user/follow/{userId}', [FollowsController::class, 'followUser'])->name('user.follow');
 
 // Authentification
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -61,6 +63,11 @@ Route::get('my-deck', function () {
     });
     return view('user.deck', ['monsters' => $monsters]);
 })->middleware('auth')->name('user.deck');
+
+// Affichage d'un users spécifique
+Route::get('user/{id}/{slug}', function ($id) {
+    return view('user.show', ['user' => \App\Models\User::find($id)]);
+})->name('user.show');
 
 /*
 |--------------------------------------------------------------------------

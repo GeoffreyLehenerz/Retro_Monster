@@ -3,7 +3,7 @@
     @foreach ($monsters as $monster)
         <!-- Monster Item -->
         <article class="relative bg-gray-700 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 monster-card" data-monster-type="{{strtolower($monster->monsterType->name)}}">
-            <img class="w-full h-48 object-cover rounded-t-lg" src="storage/images/{{$monster->image_url}}" alt="{{$monster->name}}"/>
+            <img class="w-full h-48 object-cover rounded-t-lg" src="{{ asset('storage/images/' . $monster->image_url) }}" alt="{{$monster->name}}"/>
             <div class="p-4">
                 <h3 class="text-xl font-bold">
                     {{$monster->name}}
