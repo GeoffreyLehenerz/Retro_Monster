@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -70,5 +72,14 @@ class User extends Authenticatable
     public function notations()
     {
         return $this->hasMany(Notation::class);
+    }
+
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        return [
+            'username' => $this->username,
+        ];
     }
 }

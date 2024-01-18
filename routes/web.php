@@ -8,6 +8,7 @@ use App\Http\Controllers\NotationController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\FollowsController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,3 +116,7 @@ Route::post('/monster/{monster}/comment', [CommentController::class, 'store'])->
 Route::get('/users', function () {
     return view('user.index');
 })->name('user.index');
+
+//route des recherches
+
+Route::get('/search', [SearchController::class, 'search'])->name('search');
