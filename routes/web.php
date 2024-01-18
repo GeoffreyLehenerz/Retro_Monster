@@ -84,6 +84,9 @@ Route::post('/monsters/add', [MonsterController::class, 'add'])->middleware('aut
 Route::put('/monster/update/{id}', [MonsterController::class, 'update'])->name('monster.update');
 Route::delete('/monster/delete/{id}', [MonsterController::class, 'delete'])->name('monster.delete');
 
+// Filtrer les monstres
+Route::get('/monster/filter', [MonsterController::class, 'filter'])->name('monster.filter');
+
 // Ajouter un monstre aux favoris
 Route::post('/monster/addToFavorites/{monsterId}', [FavoritesController::class, 'addToFavorites'])->name('monster.add-to-favorites');
 

@@ -133,4 +133,42 @@ class MonsterController extends Controller
         // Rediriger vers une page avec un message de succès
         return redirect()->route('pages.home')->with('success', 'Monstre supprimé avec succès!');
     }
+
+    public function filter(Request $request)
+    {
+        $query = Monster::query();
+
+        // Filtre par type
+        if ($request->has('type') && $request->type != '') {
+            $query->whereHas('monsterType', function ($q) use ($request) {
+                $q->where('type_id', $request->type);
+            });
+        }
+
+        // Filtre par rareté
+        if ($request->has('rarete') && $request->rarete != '') {
+            $query->whereHas('rarety', function ($q) use ($request) {
+                $q->where('rarety_id', $request->rarete);
+            });
+        }
+
+        // Filtre par PV (Points de Vie)
+        if ($request->has('min_pv') && $request->has('max_pv')) {
+            $minPv = (int)$request->min_pv;
+            $maxPv = (int)$request->max_pv;
+            $query->whereBetween('pv', [$minPv, $maxPv]);
+        }
+
+        // Filtre par Attaque
+        if ($request->has('min_attaque') && $request->has('max_attaque')) {
+            $minAttaque = (int)$request->min_attaque;
+            $maxAttaque = (int)$request->max_attaque;
+            $query->whereBetween('attack', [$minAttaque, $maxAttaque]);
+        }
+
+        $monsters = $query->get();
+        $users = collect(); // Créer une collection vide pour $users
+
+        return view('search.results', compact('monsters', 'users'));
+    }
 }
