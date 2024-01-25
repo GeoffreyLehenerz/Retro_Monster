@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Monster;
 use App\Models\Rarety;
 use App\Models\MonsterType;
+use App\Models\Notation;
+use App\Models\Comment;
+use App\Models\Favorite;
 use Illuminate\Support\Facades\Auth;
 
 class MonsterController extends Controller
@@ -126,8 +129,9 @@ class MonsterController extends Controller
         if ($monster->image_url && file_exists(storage_path('app/public/images/' . $monster->image_url))) {
             unlink(storage_path('app/public/images/' . $monster->image_url));
         }
-
-        // Supprimer le monstre
+        Notation::where('monster_id', $id)->delete();
+        Comment::where('monster_id', $id)->delete();
+        Favorite::where('monster_id', $id)->delete();
         $monster->delete();
 
         // Rediriger vers une page avec un message de succès

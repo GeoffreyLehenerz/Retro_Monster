@@ -21,10 +21,15 @@
         <div>
             @include('monster._index', ['monsters' => \App\Models\User::find($user->id)->monsters()->orderBy('created_at', 'ASC')->limit(9)->get(),])
         </div>
+        @php
+            $isFollowed = auth()->check() && auth()->user()->following->contains($user->id);                
+        @endphp
+
+
         <div class="text-center pt-8">
             <a href="{{ route('user.index') }}" class="inline-block text-white bg-red-500 hover:bg-red-700 rounded-full px-6 py-2 transition-colors duration-300 mr-4">Retour à la liste</a>
-            <a href="#" class="follow-user inline-block text-white bg-gray-400 hover:bg-red-700 rounded-full px-4 py-2 transition-colors duration-300" data-id="{{ $user->id }}">
-                Suivre
+            <a href="#" class="follow-user inline-block text-white {{ $isFollowed ? 'bg-red-500' : 'bg-gray-400' }} hover:bg-red-700 rounded-full px-4 py-2 transition-colors duration-300" data-id="{{ $user->id }}">
+                {{ $isFollowed ? 'Suivi' : 'Suivre' }}
             </a>
         </div>
 
